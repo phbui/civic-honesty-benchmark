@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use this benchmark, please cite both the paper from preferred-citation and the software itself."
+title: "Civic Honesty Benchmark"
+type: software
+authors:
+  - family-names: Bui
+    given-names: Phi
+repository-code: "https://github.com/phbui/civic-honesty-benchmark"
+license: MIT
+preferred-citation:
+  type: article
+  title: "PAPER TITLE (fill at arXiv/workshop time)"
+  authors:
+    - family-names: Bui
+      given-names: Phi
+  year: 2026
+references:
+  - type: data
+    title: "Street Pavement Rating (NYC Open Data)"
+    authors:
+      - name: "New York City Department of Transportation"
+    url: "https://data.cityofnewyork.us"

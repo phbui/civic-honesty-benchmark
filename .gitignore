@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+build/
+dist/
+*.egg-info/
+.venv/
+venv/
+.env
+.cache/
+results/prompted_eval_local/
+output/
+wandb/
+.vscode/
+.idea/
+.DS_Store
