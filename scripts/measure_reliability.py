@@ -58,14 +58,21 @@ def pearson(pairs: list[tuple[float, float]]) -> float:
     return sxy / math.sqrt(sxx * syy)
 
 
-def collapse_occasions(rows: list[dict]) -> dict[str, list[tuple[date, float]]]:
+def collapse_occasions(
+    rows: list[dict],
+    *,
+    segment_field: str = "oftcode",
+    rating_field: str = "systemrating",
+    date_field: str = "inspection",
+) -> dict[str, list[tuple[date, float]]]:
     """Group rows by segment, collapse same-date rows to their mean rating, and
     return each segment's occasions sorted by date. Rows missing any of the three
-    fields, or with an unparseable rating or date, are skipped."""
+    fields, or with an unparseable rating or date, are skipped. Field names default
+    to the NYC table's; measure_reliability_sf.py passes San Francisco's."""
     ratings: dict[str, dict[str, list[float]]] = defaultdict(lambda: defaultdict(list))
     for r in rows:
         try:
-            ratings[r["oftcode"]][r["inspection"][:10]].append(float(r["systemrating"]))
+            ratings[r[segment_field]][r[date_field][:10]].append(float(r[rating_field]))
         except (KeyError, TypeError, ValueError):
             continue
     out: dict[str, list[tuple[date, float]]] = {}
@@ -98,10 +105,11 @@ def consecutive_pairs(
     return all_pairs, band_pairs, gaps
 
 
-def test_retest(rows: list[dict]) -> dict:
+def test_retest(rows: list[dict], **field_names: str) -> dict:
     """The full computation on already-fetched rows; separated from fetching so it
-    is testable on fixtures."""
-    occasions = collapse_occasions(rows)
+    is testable on fixtures. `field_names` forwards segment_field/rating_field/
+    date_field to collapse_occasions for non-NYC tables."""
+    occasions = collapse_occasions(rows, **field_names)
     all_pairs, band_pairs, gaps = consecutive_pairs(occasions)
     gaps.sort()
     return {

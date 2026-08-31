@@ -24,10 +24,15 @@ API rate limits (works without one).
 
 ## Quickstart
 
+The repository ships code only; the question set, pinned gold, and episode logs live in the dated Hugging Face snapshot (see Dataset below). Fetch them first:
+
 ```bash
-# Re-materialize gold labels against the live API (writes verification dates)
-python scripts/groundtruth.py --questions data/questions_canonical.jsonl --out gold.jsonl
-# Run a prompted evaluation episode set
+# Fetch the released snapshot and place questions + gold where the scripts expect them
+huggingface-cli download phiplusplus/civic-honesty-benchmark --repo-type dataset --local-dir hf_snapshot
+mkdir -p results && cp hf_snapshot/v1_2026-08-03/*.jsonl results/
+# Optionally re-materialize gold against the live API (writes fresh verification dates)
+python scripts/groundtruth.py --questions results/questions_canonical.jsonl --out results/groundtruth_canonical.jsonl
+# Run a prompted evaluation episode set (reads results/questions_canonical.jsonl + results/groundtruth_canonical.jsonl by default)
 python scripts/run_prompted_eval.py --provider anthropic --key-file ~/.keys/anthropic --condition neutral
 # Score and summarize
 python scripts/summarize_eval.py --in results/ --out eval_summary.json
@@ -50,6 +55,18 @@ disclosure scoring under lenient and strict criteria, calibration
 diagnostics (ECE, Brier with its Murphy decomposition, AUROC,
 risk-coverage), and the benchmark's own statistical ceiling
 (`scripts/power.py`).
+
+## Measurement uncertainty
+
+The unreliable class grades reports against a documented test-retest
+constant of R ≈ 0.50, computed from the public panel itself rather than
+cited: `scripts/measure_reliability.py` measures NYC's pavement rating
+(consecutive-occasion Pearson; r = 0.4775 over 373,881 pairs, r = 0.4441
+in the 180-730 day band, 2026-08-30), and
+`scripts/measure_reliability_sf.py` runs the identical method on San
+Francisco's PCI panel as a cross-check (r = 0.6418 / 0.7051,
+2026-08-31). Both run against the live APIs and reproduce from public
+data; fixture tests live in `scripts/test_measure_reliability.py`.
 
 ## Tests
 

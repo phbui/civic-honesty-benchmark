@@ -9,7 +9,7 @@ repository-code: "https://github.com/phbui/civic-honesty-benchmark"
 license: MIT
 preferred-citation:
   type: article
-  title: "PAPER TITLE (fill at arXiv/workshop time)"
+  title: "Do Agents Disclose What the Data Cannot Support? A Live-Data Benchmark for Missingness Disclosure, Abstention, and Measurement-Uncertainty Caveats over Municipal Open Data"
   authors:
     - family-names: Bui
       given-names: Phi

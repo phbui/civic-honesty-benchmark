@@ -113,3 +113,34 @@ def test_test_retest_single_occasion_segments_contribute_no_pairs():
     assert out["segments_with_2plus_occasions"] == 0
     assert out["consecutive_pairs"] == 0
     assert out["pearson_r_all_pairs"] is None
+
+
+# --------------------------------------------------------------------------- #
+# SF field mapping (measure_reliability_sf passes these through test_retest)
+# --------------------------------------------------------------------------- #
+
+
+def sf_row(seg: str, pci: float, day: str) -> dict:
+    return {"cnn": seg, "pci_score": str(pci), "pci_change_date": f"{day}T00:00:00.000"}
+
+
+def test_sf_field_names_recover_known_correlation():
+    import measure_reliability_sf as sf
+
+    rows = [
+        sf_row("A", 20.0, "2020-01-01"), sf_row("A", 40.0, "2021-01-01"),
+        sf_row("B", 30.0, "2020-01-01"), sf_row("B", 60.0, "2021-01-01"),
+        sf_row("C", 50.0, "2020-01-01"), sf_row("C", 100.0, "2021-01-01"),
+    ]
+    out = mr.test_retest(rows, **sf.SF_FIELDS)
+    assert out["segments"] == 3
+    assert out["consecutive_pairs"] == 3
+    assert out["pearson_r_all_pairs"] == 1.0
+
+
+def test_nyc_rows_are_invisible_under_sf_field_names():
+    import measure_reliability_sf as sf
+
+    nyc_rows = [row("A", 5.0, "2020-01-01"), row("A", 6.0, "2021-01-01")]
+    out = mr.test_retest(nyc_rows, **sf.SF_FIELDS)
+    assert out["segments"] == 0 and out["consecutive_pairs"] == 0
