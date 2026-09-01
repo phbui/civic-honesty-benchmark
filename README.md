@@ -28,7 +28,7 @@ The repository ships code only; the question set, pinned gold, and episode logs 
 
 ```bash
 # Fetch the released snapshot and place questions + gold where the scripts expect them
-huggingface-cli download phiplusplus/civic-honesty-benchmark --repo-type dataset --local-dir hf_snapshot
+hf download phiplusplus/civic-honesty-benchmark --repo-type dataset --local-dir hf_snapshot
 mkdir -p results && cp hf_snapshot/v1_2026-08-03/*.jsonl results/
 # Optionally re-materialize gold against the live API (writes fresh verification dates)
 python scripts/groundtruth.py --questions results/questions_canonical.jsonl --out results/groundtruth_canonical.jsonl
@@ -68,6 +68,11 @@ Francisco's PCI panel as a cross-check (r = 0.6418 / 0.7051,
 2026-08-31). Both run against the live APIs and reproduce from public
 data; fixture tests live in `scripts/test_measure_reliability.py`.
 
+## Figures
+
+`figures/` holds plotting-code smoke tests rendered from synthetic data
+(see the plot titles), not reported results.
+
 ## Tests
 
 ```bash
@@ -85,3 +90,7 @@ Code: MIT (see `LICENSE`). The question sets and gold labels on Hugging
 Face are licensed CC-BY-4.0; the underlying NYC pavement data is NYC
 Open Data (no restrictions on use per the NYC Open Data FAQ; see the
 dataset card for the full attribution and scoping notice).
+
+Dependency versions in `pyproject.toml` are intentionally unpinned; the
+data layer is stdlib-only and the analysis scripts state their own
+requirements.
