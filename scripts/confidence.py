@@ -17,7 +17,7 @@ level" is why
 free-text tack-on to the answer: confidence is a scalar P(this turn's action
 is correct); the uncertainty statement is a distinct claim about the
 underlying MEASURE's documented reliability (e.g. NYC street-rating R of
-about 0.50, per an earlier measurement study of the same dataset), and the
+about 0.50, computed from the live panel by measure_reliability.py), and the
 two must be gradeable independently.
 
 Malformed output is a recorded `ParseFailure`, never coerced to a default
