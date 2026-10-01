@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use this benchmark, please cite both the paper from preferred-citation and the software itself."
+message: "If you use this benchmark, please cite it using the metadata below."
 title: "Civic Honesty Benchmark"
 type: software
 authors:
@@ -7,13 +7,6 @@ authors:
     given-names: Phi
 repository-code: "https://github.com/phbui/civic-honesty-benchmark"
 license: MIT
-preferred-citation:
-  type: article
-  title: "Do Agents Disclose What the Data Cannot Support? A Live-Data Benchmark for Abstention, Measurement-Uncertainty Caveats, and Missingness Disclosure over Municipal Open Data"
-  authors:
-    - family-names: Bui
-      given-names: Phi
-  year: 2026
 references:
   - type: data
     title: "Street Pavement Rating (NYC Open Data)"
