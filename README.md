@@ -4,6 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/code-MIT-blue.svg)](LICENSE)
 [![Data: CC BY 4.0](https://img.shields.io/badge/data-CC%20BY%204.0-lightgrey.svg)](https://huggingface.co/datasets/phiplusplus/civic-honesty-benchmark)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](#install)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23492695.svg)](https://doi.org/10.5281/zenodo.23492695)
 [![Dataset on Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97-dataset-yellow.svg)](https://huggingface.co/datasets/phiplusplus/civic-honesty-benchmark)
 
 **A live-data benchmark that asks whether an AI agent tells you what a city's open data cannot say.** 596 questions over New York City's Street Pavement Rating table, graded against gold answers materialized the same day from the live API. The agent gets real query access and a genuine option to decline. The benchmark scores three kinds of honesty: abstaining when the data cannot answer, carrying a caveat when the measurement is noisy, and disclosing that a field is mostly empty when the answer silently depends on it.
@@ -34,7 +35,7 @@ The study separates three stages that one disclosure rate would collapse. The ag
 | Looking | A null-revealing query appears in 54 of 113 eligible Claude Haiku 5.5 episodes with a readable schema and in 46 with the counts added, in 4 of 113 for gpt-5-mini at low reasoning, and in 2 of 112 for Qwen3-32B and 112 of 113 for GLM-5.3-Flash. Looking differs between models far more than between environments. |
 | Keeping going | A harness default cut every tool result to 300 characters. At that length the no-report rate runs from 9% to 70% across settings. At 4,000 characters it falls to between 0% and 2.3% in six settings, to 9% to 14% in two more, and only to 37% and 45% in Qwen3.8-Flash and gpt-oss-120b. The disclosure gap stays. |
 | Telling | Handed the null count under a readable schema, six of ten settings disclose on 44% to 96% of eligible items, against 0% to 40% when the count is one query away: Claude Haiku 4.5, Claude Haiku 5.5, Claude Sonnet 5.5, gpt-5-mini at both reasoning levels, and Qwen3.8-Flash. Gemini 3.5 Flash-Lite, gpt-oss-120b, Qwen3-32B, and GLM-5.3-Flash show no detectable response. |
-| Hedges | An item-by-item audit of 50 strict hits, labeled by a language model and by the author (all 50 labeled blind, agreement 46 of 50, kappa 0.88), found 14 quantified, 9 specific, 23 boilerplate, and 4 false positives after reconciliation. |
+| Hedges | An item-by-item audit of 50 strict hits, labeled blind by the author and independently by a language model (agreement 46 of 50, kappa 0.88), found 14 quantified, 9 specific, 23 boilerplate, and 4 false positives after reconciliation. |
 | Confidence | Stated confidence carries little information about correctness: AUROC is at or below 0.5 in 17 of 35 run-settings, and a template-clustered interval lies entirely below 0.5 in five. |
 
 ![Strict disclosure for ten settings across the two environment factors, tool-result cut and null counts in the schema tool.](docs/two-by-two.png)
@@ -169,7 +170,7 @@ This benchmark computes each gold answer by executing the question's own query a
 
 ## Citation
 
-See [CITATION.cff](CITATION.cff), which GitHub's "Cite this repository" button reads.
+See [CITATION.cff](CITATION.cff), which GitHub's "Cite this repository" button reads. The archived releases carry the concept DOI 10.5281/zenodo.23492695, and v1.2.0 is 10.5281/zenodo.23492696.
 
 ## Contributing
 
