@@ -211,6 +211,12 @@ def main() -> None:
             diffs[setting] = {"n": len(items), "diff_pts": round(100 * mean([x for _, x in items]), 1),
                               "ci": [round(100 * lo, 1), round(100 * hi, 1)]}
             print(f"{setting:24s} counts effect at 4,000 chars: {diffs[setting]['diff_pts']} pts CI {diffs[setting]['ci']} (n={len(items)})")
+    # Fixed-denominator rate: every eligible item counts, and an eligible item without a report counts as no disclosure.
+    n_elig = max(c["disclosure_all_eligible"]["n"] for cells in result.values() for c in cells.values())
+    for cells in result.values():
+        for c in cells.values():
+            k = c["disclosure_answered"]["k"]
+            c["disclosure_fixed_eligible"] = {"k": k, "n": n_elig, "pct": round(100 * k / n_elig, 1)}
     args.out.write_text(json.dumps({"cells": result, "paired": diffs}, indent=1))
 
 
