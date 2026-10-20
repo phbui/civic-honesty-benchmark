@@ -1,140 +1,154 @@
 # Civic Honesty Benchmark
 
-A live-data benchmark asking whether language-model agents, given real
-query access to a municipal open-data API, report honestly about three
-things the data itself cannot answer for them: what is knowable, what is
-unknowable by construction, and what is answerable but unreliable.
+[![CI](https://github.com/phbui/civic-honesty-benchmark/actions/workflows/ci.yaml/badge.svg)](https://github.com/phbui/civic-honesty-benchmark/actions/workflows/ci.yaml)
+[![License: MIT](https://img.shields.io/badge/code-MIT-blue.svg)](LICENSE)
+[![Data: CC BY 4.0](https://img.shields.io/badge/data-CC%20BY%204.0-lightgrey.svg)](https://huggingface.co/datasets/phiplusplus/civic-honesty-benchmark)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](#install)
+[![Dataset on Hugging Face](https://img.shields.io/badge/%F0%9F%A4%97-dataset-yellow.svg)](https://huggingface.co/datasets/phiplusplus/civic-honesty-benchmark)
 
-596 questions over New York City's Street Pavement Rating dataset
-(220 answerable, 220 unanswerable by construction, 156 answerable but
-unreliable), materialized live: every gold answer is computed by
-executing the question's own query against the same live API the agent
-uses, and every gold label carries its verification date.
+**A live-data benchmark that asks whether an AI agent tells you what a city's open data cannot say.** 596 questions over New York City's Street Pavement Rating table, graded against gold answers materialized the same day from the live API. The agent gets real query access and a genuine option to decline. The benchmark scores three kinds of honesty: abstaining when the data cannot answer, carrying a caveat when the measurement is noisy, and disclosing that a field is mostly empty when the answer silently depends on it.
 
-## The study
+![Strict missingness disclosure by model setting: from 0 of 108 for Claude Haiku 4.5 to about a third for gpt-5-mini, with Wilson 95 percent intervals.](docs/disclosure-by-setting.png)
 
-The benchmark ships with one study. Ten model settings from six families
-(Claude, Gemini, GPT, gpt-oss, Qwen, and GLM) run the same 596 questions under
-the same prompts, tools, scorer, and same-day gold. The environment is a
-factor of the study and not a fixed background: the harness can change how many
-characters of each tool result the agent reads (300 or 4,000) and whether the
-schema tool states each field's null count.
+Ten model settings from six families run the same questions under the same prompts, tools, scorer, and gold. Retrieval is close to solved, with accuracy on answered items from 71% to 99%. Disclosure is not. Claude Haiku 4.5 disclosed missingness on 0 of 108 eligible answered items, and most of the higher rates in the figure are boilerplate hedges, not findings. The environment turned out to matter as much as the model, which the study measures directly.
 
-The study separates three stages of honest reporting that one disclosure rate
-would collapse. The agent can *look* for the defect, it can *keep going* until
-its queries succeed, and it can *tell* the reader once it holds the fact.
+## Why
 
-| Finding | Result |
+Analysts, reporters, and residents increasingly ask an agent a question about city data and get one sentence back. That sentence can be an exact count over a field that is 91% empty, stated with high confidence, with nothing about the other 91%. The agent has read the table and the reader has not, so the defect is visible to one and invisible to the other. This benchmark measures that gap on live data, so that the answer cannot be memorized and the gold cannot go stale.
+
+## What it measures
+
+| Defect | Question class | What an honest report does |
+|---|---|---|
+| Unanswerable | 220 questions with no supporting field or record, so any answer is a fabrication | Abstains, after checking |
+| Unreliable | 156 questions whose exact answer rests on a rating with test-retest r of about 0.5 | Carries the measurement-uncertainty caveat |
+| Missing | 113 of 220 answerable questions touch a field that is 86% to 91% null | Says that the field is mostly empty |
+
+The study separates three stages that one disclosure rate would collapse. The agent can **look** for the defect, **keep going** until its queries succeed, and **tell** the reader once it holds the fact.
+
+## Findings
+
+| Stage | Result |
 |---|---|
 | Retrieval | Accuracy on answered answerable items is 71% to 99% across settings, and 89% for Claude Haiku 4.5. |
 | Looking | A null-revealing query appears in 46 of 113 eligible Claude Haiku 5.5 episodes with everything readable, and in 4 and 3 for gpt-5-mini and Qwen3-32B. No environment changed it. |
-| Keeping going | With the cut at 300 characters, no-report runs from 9% to 70% across settings. At 4,000 characters it is 0% to 2% in the three settings re-run. |
+| Keeping going | A harness default cut every tool result to 300 characters. At that length the no-report rate runs from 9% to 70% across settings. At 4,000 characters it falls to 0% to 2% in the three settings re-run, and the disclosure gap stays. |
 | Telling | Handed the null count under a readable schema, Claude Haiku 5.5 and gpt-5-mini disclose on 82% and 88% of eligible items, against 12% and 40% when the count is one query away. Qwen3-32B discloses on 1% with the number in its tool result. |
-| Hedges | Most nonzero disclosure rates are boilerplate. An item-by-item audit of 50 strict hits, by one language-model rater, found 14 quantified, 8 specific, 24 boilerplate, and 4 false positives. |
-| Confidence | Stated confidence carries no information about correctness in any family: AUROC is at or below 0.5 in 15 of 17 run-settings, and inverted in two. |
+| Hedges | An item-by-item audit of 50 strict hits found 14 quantified, 8 specific, 24 boilerplate, and 4 false positives. The rater was a language model, so the split is an estimate. |
+| Confidence | Stated confidence carries no information about correctness in any family: AUROC is at or below 0.5 in 15 of 17 run-settings and inverted in two. |
 
-The run order is in the paper's Appendix A. Several design choices, the cut
-length, the null-count variant, the quantified scoring tier, and the audit, were
-made after earlier results were seen, so those parts of the study are
-exploratory in design.
+![Strict disclosure for three models across the two environment factors, tool-result cut and null counts in the schema tool.](docs/two-by-two.png)
+
+The run order is in the paper's Appendix A and in [CHANGELOG.md](CHANGELOG.md). The cut length, the null-count variant, the quantified scoring tier, and the audit were chosen after earlier results were seen, so those parts are exploratory in design.
+
+## Features
+
+- **Live gold.** Every gold answer is the question's own query executed against the live API on the day of the run, and re-executed after it. Every released run reproduced all 596 values. Gold re-materialized three days later had drifted on 28.5% of the questions.
+- **A real option to decline.** Eight turns, two tools (a SoQL query tool and a schema tool), and one fixed JSON report schema with an action, an answer, a stated confidence, and an uncertainty statement.
+- **Programmatic scoring.** No judge model. Lenient, strict, and quantified missingness-disclosure tiers, exact-match accuracy, abstention and fabrication, and calibration (ECE, Brier with its Murphy decomposition, AUROC, risk-coverage).
+- **Environment as a factor.** The tool-result cut, the null-count schema tool, the turn budget, and request pacing are flags of the driver, and each run stamps them into its summary.
+- **Any vendor.** An adapter over OpenAI-compatible chat completions runs Claude, Gemini, GPT, gpt-oss, Qwen, and GLM through one policy, and counts every dropped or rebuilt tool call.
+- **Honest statistics.** Template-clustered bootstrap intervals, exact binomial bounds at zero counts, paired McNemar tests, and a power analysis dated before the first run.
+- **A contamination check.** A no-tool condition on the 376 answerable and unreliable questions. Five settings answered none, and the largest leak is 12 correct of 376.
 
 ## Install
+
+Python 3.11 or newer. The data layer is standard library only.
 
 ```bash
 git clone https://github.com/phbui/civic-honesty-benchmark
 cd civic-honesty-benchmark
 pip install -e ".[anthropic,openai,test]"
+python -m pytest scripts -q
 ```
 
-Optional: set `SOCRATA_APP_TOKEN` in your environment to raise the NYC
-API rate limits (works without one).
+The tests call no live API and spend nothing. Set `SOCRATA_APP_TOKEN` to raise the city's rate limit; it works without one.
 
 ## Quickstart
 
-The repository ships code only; the question set, pinned gold, and episode logs live in the dated Hugging Face snapshot (see Dataset below). Fetch them first:
+The repository ships code only. The questions, pinned gold, and episode logs live in dated snapshots on Hugging Face.
 
 ```bash
-# Fetch the released snapshot and place questions + gold where the scripts expect them
 hf download phiplusplus/civic-honesty-benchmark --repo-type dataset --local-dir hf_snapshot
-mkdir -p results && cp hf_snapshot/v1_2026-08-03/*.jsonl results/
-# Optionally re-materialize gold against the live API (writes fresh verification dates)
+mkdir -p results && cp hf_snapshot/v1_2026-08-03/*.jsonl hf_snapshot/v1_2026-08-03/field_null_rates.json results/
+
+# Re-materialize gold against the live API today (writes fresh verification dates)
 python scripts/groundtruth.py --questions results/questions_canonical.jsonl --out results/groundtruth_canonical.jsonl
-# Run a prompted evaluation episode set (reads results/questions_canonical.jsonl + results/groundtruth_canonical.jsonl by default)
-python scripts/run_prompted_eval.py --provider anthropic --key-file ~/.keys/anthropic --condition neutral
-# Score and summarize
-python scripts/summarize_eval.py --in results/ --out eval_summary.json
+
+# Rescore a released run without any model call; prints eligible_answered=108 lenient=0.0 strict=0.0 for Claude Haiku 4.5
+python scripts/disclosure.py --score hf_snapshot/v1_2026-08-03/prompted_eval/neutral__claude-haiku-4-5__anthropic.jsonl
+
+# Run a model (spends money; the flag is required)
+python scripts/run_prompted_eval.py --provider anthropic --key-file ~/.keys/anthropic --conditions neutral --i-know-this-costs-money
 ```
 
-Other vendors run through an adapter over OpenAI-compatible chat completions
-(`--provider openai|gemini|deepinfra|together|groq`, see `scripts/llm_providers.py`).
-The environment factors are flags of the same driver:
+Other vendors run through the adapter (`--provider openai|gemini|deepinfra|together|groq`). The environment factors are flags of the same driver:
 
 ```bash
-# the 4,000-character cut with null counts in the schema tool (the readable cell of the two-by-two)
+# the readable cell of the two-by-two: 4,000-character cut and null counts in the schema tool
 python scripts/run_prompted_eval.py --provider anthropic --key-file ~/.keys/anthropic \
   --model claude-haiku-5-5 --omit-temperature --extra-json '{"thinking":{"type":"disabled"}}' \
   --conditions neutral --result-max-chars 4000 \
   --schema-null-counts results/field_null_rates_2026-10-17.json --i-know-this-costs-money
 ```
 
-`scripts/launchers/` holds the exact commands of the 2026-10-17 and 2026-10-19 runs.
-Every run stamps its environment flags, adapter statistics, and gold drift check
-into its summary file.
+[scripts/launchers/](scripts/launchers) holds the exact commands of the 2026-10 runs.
+
+## Results
+
+Neutral condition, base regime (300-character cut, eight turns). Disclosure is the strict tier over eligible answered items. The figure data is in [docs/results_2026-10.json](docs/results_2026-10.json), and every number recomputes from the episode logs.
+
+| Setting | No report | Abstain | Fabricate | Accuracy | Disclosure | AUROC |
+|---|---|---|---|---|---|---|
+| Claude Haiku 4.5 | 23.2% | 96.2% | 3.8% | 89.2% | 0/108 | 0.51 |
+| Claude Haiku 5.5 | 9.9% | 99.5% | 0.5% | 89.4% | 8/112 | 0.40 |
+| Claude Sonnet 5.5 | 33.9% | 100% | 0% | 85.5% | 8/62 | 0.46 |
+| Gemini 3.5 Flash-Lite | 12.6% | 96.3% | 3.7% | 92.0% | 1/113 | 0.50 |
+| gpt-5-mini, minimal | 46.0% | 73.8% | 26.2% | 76.3% | 33/103 | 0.64 |
+| gpt-5-mini, low | 35.1% | 100% | 0% | 71.0% | 35/105 | 0.39 |
+| gpt-oss-120b (third-party host) | 53.9% | 98.5% | 1.5% | 85.2% | 1/44 | 0.56 |
+| Qwen3-32B | 8.9% | 97.5% | 2.5% | 84.1% | 0/99 | 0.37 |
+| GLM-5.3-Flash | 45.5% | 100% | 0% | 95.7% | 18/88 | 0.40 |
+| Qwen3.8-Flash | 69.8% | 100% | 0% | 98.6% | 14/47 | 0.81 |
+
+The gpt-oss-120b row ran on a host that files the model's argument-free tool calls under its reasoning field, so the adapter rebuilt 1,962 calls, and 77 of its 134 abstentions came before any query. A native 90-question check is in progress, and if it disagrees the row comes out.
+
+![AUROC of stated confidence against correctness for the ten settings.](docs/confidence-auroc.png)
 
 ## Dataset
 
-Question sets, pinned gold labels, and episode logs live on Hugging
-Face: [`phiplusplus/civic-honesty-benchmark`](https://huggingface.co/datasets/phiplusplus/civic-honesty-benchmark). Because the benchmark is live-materialized,
-the pinned gold is a dated snapshot; the relabeling protocol
-(`scripts/groundtruth.py`) is the documented refresh procedure, and
-drift between snapshots is a measured property of the benchmark, not an
-error. See the dataset card for the dated-release table and schema.
-The v1 snapshot holds the Claude Haiku 4.5 logs. The question set and gold are unchanged for the ten-setting study, and the logs of the other nine settings are being added as a v2 snapshot.
+Questions, pinned gold, null rates, and episode logs: [`phiplusplus/civic-honesty-benchmark`](https://huggingface.co/datasets/phiplusplus/civic-honesty-benchmark), CC-BY-4.0, in immutable dated snapshots.
 
-## Scoring
+| Snapshot | Contents |
+|---|---|
+| `v1_2026-08-03` | The 596 questions, same-day gold, and the Claude Haiku 4.5 logs of four conditions |
+| `v1_2026-08-05_reencounter` | The re-encounter condition with a twenty-turn budget |
+| `v2_2026-10` | Nine further settings, the cut-length and null-count runs, repeats, and the gold files with drift checks |
 
-Three parallel reward ledgers per reported turn (a level-paid bounded
-proper score, its market-scoring-rule increment, and a zero control),
-disclosure scoring under lenient and strict criteria, calibration
-diagnostics (ECE, Brier with its Murphy decomposition, AUROC,
-risk-coverage), and the benchmark's own statistical ceiling
-(`scripts/power.py`).
+Because the benchmark is live, the pinned gold is a dated snapshot, and drift between snapshots is a measured property and not an error. Contamination, versioning, intended uses, and limits are in the [datasheet](docs/DATASHEET.md) and in the dataset card.
 
 ## Measurement uncertainty
 
-The unreliable class grades reports against a documented test-retest
-constant of R ≈ 0.50, computed from the public panel itself rather than
-cited: `scripts/measure_reliability.py` measures NYC's pavement rating
-(consecutive-occasion Pearson; r = 0.4775 over 373,881 pairs, r = 0.4441
-in the 180-730 day band, 2026-08-30), and
-`scripts/measure_reliability_sf.py` runs the identical method on San
-Francisco's PCI panel as a cross-check (r = 0.6418 / 0.7051,
-2026-08-31). Both run against the live APIs and reproduce from public
-data; fixture tests live in `scripts/test_measure_reliability.py`.
+The unreliable class grades against a test-retest constant of R of about 0.50, computed from the public panel and not cited: `scripts/measure_reliability.py` measures NYC's pavement rating (consecutive-occasion Pearson, r = 0.4775 over 373,881 pairs, and r = 0.4441 in the 180 to 730 day band), and `scripts/measure_reliability_sf.py` runs the identical method on San Francisco's panel as a cross-check (r = 0.6418 and 0.7051). Both reproduce from public data.
 
-## Figures
+## Limitations
 
-`figures/` holds plotting-code smoke tests rendered from synthetic data
-(see the plot titles), not reported results.
+One dataset in one city. Disclosure scoring is programmatic, so a paraphrase that names neither the field nor a missingness term goes uncounted, and the lenient tier is the scorer's upper bound. The strict tier counts a hedge the same as a finding, which is why the quantified tier and the audit exist. Most settings are measured only at the 300-character cut. The study covers frozen models and says nothing about trained policies. Anyone who trains against the benchmark should hold out the disclosure endpoint and vary the touched fields, because honesty here follows what the context states and could teach caveat-parroting.
 
 ## Tests
 
 ```bash
-pytest scripts/
+python -m pytest scripts -q
 ```
 
 ## Citation
 
-See `CITATION.cff` (GitHub's "Cite this repository" button). Paper
-reference to be added on publication.
+See [CITATION.cff](CITATION.cff), which GitHub's "Cite this repository" button reads. A paper reference will be added on publication.
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md). New-model results that follow the protocol and report a gold drift check are welcome through the issue template.
 
 ## License
 
-Code: MIT (see `LICENSE`). The question sets and gold labels on Hugging
-Face are licensed CC-BY-4.0; the underlying NYC pavement data is NYC
-Open Data (no restrictions on use per the NYC Open Data FAQ; see the
-dataset card for the full attribution and scoping notice).
-
-Dependency versions in `pyproject.toml` are intentionally unpinned; the
-data layer is stdlib-only and the analysis scripts state their own
-requirements.
+Code: MIT ([LICENSE](LICENSE)). The questions, gold labels, and episode logs on Hugging Face: CC-BY-4.0. The underlying NYC pavement data is NYC Open Data with no restrictions on use per the NYC Open Data FAQ; the release redistributes derived content only. Dependency versions in `pyproject.toml` are intentionally unpinned; the data layer is standard library only.
