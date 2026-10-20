@@ -429,5 +429,129 @@
    }
   ],
   "note": "A null entry is a cell that was not run. Rates are over eligible answered items; no_report is the share of the whole run. Source: scripts/paper_numbers.py."
+ },
+ "prompt_only": {
+  "cells": [
+   "4,000 chars, no counts, neutral prompt",
+   "4,000 chars, no counts, null-check paragraph"
+  ],
+  "models": [
+   {
+    "name": "Claude Haiku 4.5",
+    "disclosed": [
+     0,
+     83
+    ],
+    "eligible": [
+     113,
+     113
+    ],
+    "looked": [
+     3,
+     111
+    ],
+    "looked_eligible": [
+     113,
+     113
+    ],
+    "no_report": [
+     1.7,
+     1.0
+    ]
+   },
+   {
+    "name": "Gemini 3.5 Flash-Lite",
+    "disclosed": [
+     3,
+     83
+    ],
+    "eligible": [
+     113,
+     112
+    ],
+    "looked": [
+     8,
+     110
+    ],
+    "looked_eligible": [
+     113,
+     112
+    ],
+    "no_report": [
+     0.7,
+     2.2
+    ]
+   },
+   {
+    "name": "gpt-5-mini, minimal",
+    "disclosed": [
+     30,
+     102
+    ],
+    "eligible": [
+     111,
+     103
+    ],
+    "looked": [
+     6,
+     64
+    ],
+    "looked_eligible": [
+     111,
+     103
+    ],
+    "no_report": [
+     14.1,
+     29.4
+    ]
+   },
+   {
+    "name": "GLM-5.3-Flash",
+    "disclosed": [
+     25,
+     97
+    ],
+    "eligible": [
+     113,
+     112
+    ],
+    "looked": [
+     112,
+     112
+    ],
+    "looked_eligible": [
+     113,
+     112
+    ],
+    "no_report": [
+     9.1,
+     12.8
+    ]
+   },
+   {
+    "name": "Qwen3.8-Flash",
+    "disclosed": [
+     20,
+     55
+    ],
+    "eligible": [
+     78,
+     65
+    ],
+    "looked": [
+     77,
+     63
+    ],
+    "looked_eligible": [
+     78,
+     65
+    ],
+    "no_report": [
+     37.2,
+     38.2
+    ]
+   }
+  ],
+  "note": "The prompt-only arm (condition nullcheck_exploratory, 2026-10-20): the neutral prompt plus one paragraph that tells the agent to check the null share of every field its query touches. Exploratory, added after review, five settings, one run each. Rates are over eligible answered items; looked counts eligible episodes with a null-revealing query; no_report is the share of the whole run. Source: scripts/paper_numbers.py, registry cell cap4000_nullcheck."
  }
 }
