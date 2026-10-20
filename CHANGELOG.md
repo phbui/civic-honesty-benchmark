@@ -2,6 +2,13 @@
 
 All notable changes. The version in `VERSION`, `pyproject.toml`, and `CITATION.cff` match the newest entry.
 
+## 1.3.0, 2026-10-20
+
+- Driver: a `nullcheck_exploratory` condition in `scripts/run_prompted_eval.py`, the neutral prompt plus one paragraph that tells the agent to check the null share of every field its query filters or groups on and to say so if a field is mostly null; the launcher is `scripts/launchers/run_wave_h_2026-10-20.sh`.
+- Data: the prompt-only arm on five settings (Claude Haiku 4.5, Gemini 3.5 Flash-Lite, gpt-5-mini at minimal reasoning, GLM-5.3-Flash, Qwen3.8-Flash) at the 4,000-character cut without null counts, `v2_2026-10/runs/exp_nullcheck_h_2026-10-20/` on Hugging Face, same-day gold. The Claude Haiku 4.5 log carries 597 client error rows ahead of its 596 valid rows; `paper_numbers.py` keeps the last row per question.
+- Analysis: registry cell `cap4000_nullcheck` in `docs/cells_2026-10.json` (the new entries also carry `condition`), and a `prompt_only` block in `docs/results_2026-10.json`.
+- Findings: the paragraph raises strict disclosure on eligible answered items from 0% to 27% to 74% to 99% in all five settings, Gemini included, and the share of episodes with a null-revealing query to 62% to 100%, so the neutral-prompt zero is a default and not a ceiling. Exploratory, one run per setting, chosen after the other cells were seen.
+
 ## 1.2.0, 2026-10-20
 
 - Data: the readable-schema cells (4,000-character cut, with and without null counts) for all ten settings, so that every setting carries the full environment design that three had before. 14 runs of 596 episodes, same-day gold with no drift.

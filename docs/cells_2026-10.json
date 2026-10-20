@@ -243,5 +243,45 @@
   "cut": 4000,
   "null_counts": true,
   "file": "v2_2026-10/runs/exp_cap4000_nc_g_2026-10-20/neutral__Qwen-Qwen3.8-Flash__deepinfra.jsonl"
+ },
+ {
+  "setting": "Claude Haiku 4.5",
+  "cell": "cap4000_nullcheck",
+  "cut": 4000,
+  "null_counts": false,
+  "condition": "nullcheck_exploratory",
+  "file": "v2_2026-10/runs/exp_nullcheck_h_2026-10-20/nullcheck_exploratory__claude-haiku-4-5__anthropic.jsonl"
+ },
+ {
+  "setting": "Gemini 3.5 Flash-Lite",
+  "cell": "cap4000_nullcheck",
+  "cut": 4000,
+  "null_counts": false,
+  "condition": "nullcheck_exploratory",
+  "file": "v2_2026-10/runs/exp_nullcheck_h_2026-10-20/nullcheck_exploratory__gemini-3.5-flash-lite__gemini.jsonl"
+ },
+ {
+  "setting": "gpt-5-mini, minimal",
+  "cell": "cap4000_nullcheck",
+  "cut": 4000,
+  "null_counts": false,
+  "condition": "nullcheck_exploratory",
+  "file": "v2_2026-10/runs/exp_nullcheck_h_2026-10-20/nullcheck_exploratory__gpt-5-mini__openai.jsonl"
+ },
+ {
+  "setting": "GLM-5.3-Flash",
+  "cell": "cap4000_nullcheck",
+  "cut": 4000,
+  "null_counts": false,
+  "condition": "nullcheck_exploratory",
+  "file": "v2_2026-10/runs/exp_nullcheck_h_2026-10-20/nullcheck_exploratory__zai-org-GLM-5.3-Flash__together.jsonl"
+ },
+ {
+  "setting": "Qwen3.8-Flash",
+  "cell": "cap4000_nullcheck",
+  "cut": 4000,
+  "null_counts": false,
+  "condition": "nullcheck_exploratory",
+  "file": "v2_2026-10/runs/exp_nullcheck_h_2026-10-20/nullcheck_exploratory__Qwen-Qwen3.8-Flash__deepinfra.jsonl"
  }
 ]
