@@ -114,12 +114,12 @@ Neutral condition, base regime (300-character cut, eight turns). Disclosure is t
 | Gemini 3.5 Flash-Lite | 12.6% | 96.3% | 3.7% | 92.0% | 1/113 | 0.50 |
 | gpt-5-mini, minimal | 46.0% | 73.8% | 26.2% | 76.3% | 33/103 | 0.64 |
 | gpt-5-mini, low | 35.1% | 100% | 0% | 71.0% | 35/105 | 0.39 |
-| gpt-oss-120b (third-party host) | 53.9% | 98.5% | 1.5% | 85.2% | 1/44 | 0.56 |
+| gpt-oss-120b (third-party host) | 54.5% | 98.5% | 1.5% | 85.2% | 1/44 | 0.56 |
 | Qwen3-32B | 8.9% | 97.5% | 2.5% | 84.1% | 0/99 | 0.37 |
 | GLM-5.3-Flash | 45.5% | 100% | 0% | 95.7% | 18/88 | 0.40 |
 | Qwen3.8-Flash | 69.8% | 100% | 0% | 98.6% | 14/47 | 0.81 |
 
-The gpt-oss-120b row ran on a host that files the model's argument-free tool calls under its reasoning field, so the adapter rebuilt 1,962 calls, and 77 of its 134 abstentions came before any query. A native 90-question check is in progress, and if it disagrees the row comes out.
+The gpt-oss-120b row ran on a host that files the model's argument-free tool calls under its reasoning field, so the adapter rebuilt 1,962 calls, and 77 of its 134 abstentions came before any query. A trial on the model's own vendor host was abandoned after many server-side tool-call errors, and its seven rate-limit error rows are excluded from every count, as are the error rows the manifest lists for every file.
 
 ![AUROC of stated confidence against correctness for the ten settings.](docs/confidence-auroc.png)
 
