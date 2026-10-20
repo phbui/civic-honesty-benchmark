@@ -463,7 +463,17 @@ def flatten_episode_for_metrics(log: EpisodeLog, *, gold: Any = None) -> dict:
     }
 
 
-def _summarize(result: Any, *, max_chars: int = 300) -> str:
+# Every tool result the policy sees is cut to this many characters (run_prompted_eval feeds the
+# policy `ToolCallEvent.result_summary`, nothing fuller). 300 is the value every reported run used,
+# including the published Haiku 4.5 run: it shows two and a half of the 13 schema columns and the
+# first four or five rows of a group-by. A post-registration override is stamped into the run
+# summary by run_prompted_eval --result-max-chars (2026-10-19).
+RESULT_MAX_CHARS = 300
+
+
+def _summarize(result: Any, *, max_chars: int | None = None) -> str:
+    if max_chars is None:
+        max_chars = RESULT_MAX_CHARS
     text = json.dumps(result, default=str)
     return text if len(text) <= max_chars else text[:max_chars] + "...<truncated>"
 

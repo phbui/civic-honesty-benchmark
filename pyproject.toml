@@ -10,6 +10,7 @@ dependencies = ["numpy>=1.26"]
 
 [project.optional-dependencies]
 anthropic = ["anthropic>=0.40"]
+openai = ["openai>=1.50"]
 bedrock = ["boto3>=1.34"]
 cost = ["transformers>=4.44"]
 test = ["pytest>=8"]
