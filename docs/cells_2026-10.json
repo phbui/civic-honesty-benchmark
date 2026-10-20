@@ -1,0 +1,247 @@
+[
+ {
+  "setting": "Claude Haiku 4.5",
+  "cell": "base",
+  "cut": 300,
+  "null_counts": false,
+  "file": "v1_2026-08-03/prompted_eval/neutral__claude-haiku-4-5__anthropic.jsonl"
+ },
+ {
+  "setting": "Claude Haiku 5.5",
+  "cell": "base",
+  "cut": 300,
+  "null_counts": false,
+  "file": "v2_2026-10/runs/second_family_2026-10-17/neutral__claude-haiku-5-5__anthropic.jsonl"
+ },
+ {
+  "setting": "Claude Haiku 5.5",
+  "cell": "nc300",
+  "cut": 300,
+  "null_counts": true,
+  "file": "v2_2026-10/runs/exp_nullcounts_2026-10-19/neutral__claude-haiku-5-5__anthropic.jsonl"
+ },
+ {
+  "setting": "Claude Haiku 5.5",
+  "cell": "cap4000",
+  "cut": 4000,
+  "null_counts": false,
+  "file": "v2_2026-10/runs/exp_cap4000_2026-10-19/neutral__claude-haiku-5-5__anthropic.jsonl"
+ },
+ {
+  "setting": "Claude Haiku 5.5",
+  "cell": "cap4000_nc",
+  "cut": 4000,
+  "null_counts": true,
+  "file": "v2_2026-10/runs/exp_cap4000_nc_2026-10-19/neutral__claude-haiku-5-5__anthropic.jsonl"
+ },
+ {
+  "setting": "Claude Sonnet 5.5",
+  "cell": "base",
+  "cut": 300,
+  "null_counts": false,
+  "file": "v2_2026-10/runs/exp_sonnet55_2026-10-19/neutral__claude-sonnet-5-5__anthropic.jsonl"
+ },
+ {
+  "setting": "Gemini 3.5 Flash-Lite",
+  "cell": "base",
+  "cut": 300,
+  "null_counts": false,
+  "file": "v2_2026-10/runs/second_family_2026-10-17/neutral__gemini-3.5-flash-lite__gemini.jsonl"
+ },
+ {
+  "setting": "Gemini 3.5 Flash-Lite",
+  "cell": "nc300",
+  "cut": 300,
+  "null_counts": true,
+  "file": "v2_2026-10/runs/exp_nullcounts_2026-10-19/neutral__gemini-3.5-flash-lite__gemini.jsonl"
+ },
+ {
+  "setting": "gpt-5-mini, minimal",
+  "cell": "base",
+  "cut": 300,
+  "null_counts": false,
+  "file": "v2_2026-10/runs/second_family_2026-10-17/neutral__gpt-5-mini__openai.jsonl"
+ },
+ {
+  "setting": "gpt-5-mini, low",
+  "cell": "base",
+  "cut": 300,
+  "null_counts": false,
+  "file": "v2_2026-10/runs/second_family_2026-10-17_gpt5mini_low/neutral__gpt-5-mini__openai.jsonl"
+ },
+ {
+  "setting": "gpt-5-mini, low",
+  "cell": "nc300",
+  "cut": 300,
+  "null_counts": true,
+  "file": "v2_2026-10/runs/exp_nullcounts_2026-10-19/neutral__gpt-5-mini__openai.jsonl"
+ },
+ {
+  "setting": "gpt-5-mini, low",
+  "cell": "cap4000",
+  "cut": 4000,
+  "null_counts": false,
+  "file": "v2_2026-10/runs/exp_cap4000_2026-10-19/neutral__gpt-5-mini__openai.jsonl"
+ },
+ {
+  "setting": "gpt-5-mini, low",
+  "cell": "cap4000_nc",
+  "cut": 4000,
+  "null_counts": true,
+  "file": "v2_2026-10/runs/exp_cap4000_nc_2026-10-19/neutral__gpt-5-mini__openai.jsonl"
+ },
+ {
+  "setting": "gpt-oss-120b",
+  "cell": "base",
+  "cut": 300,
+  "null_counts": false,
+  "file": "v2_2026-10/runs/exp_gptoss_di_recover_2026-10-19/neutral__openai-gpt-oss-120b__deepinfra.jsonl"
+ },
+ {
+  "setting": "Qwen3-32B",
+  "cell": "base",
+  "cut": 300,
+  "null_counts": false,
+  "file": "v2_2026-10/runs/second_family_open_2026-10-17/neutral__Qwen-Qwen3-32B__deepinfra.jsonl"
+ },
+ {
+  "setting": "Qwen3-32B",
+  "cell": "nc300",
+  "cut": 300,
+  "null_counts": true,
+  "file": "v2_2026-10/runs/exp_nullcounts_2026-10-19/neutral__Qwen-Qwen3-32B__deepinfra.jsonl"
+ },
+ {
+  "setting": "Qwen3-32B",
+  "cell": "cap4000",
+  "cut": 4000,
+  "null_counts": false,
+  "file": "v2_2026-10/runs/exp_cap4000_2026-10-19/neutral__Qwen-Qwen3-32B__deepinfra.jsonl"
+ },
+ {
+  "setting": "Qwen3-32B",
+  "cell": "cap4000_nc",
+  "cut": 4000,
+  "null_counts": true,
+  "file": "v2_2026-10/runs/exp_cap4000_nc_2026-10-19/neutral__Qwen-Qwen3-32B__deepinfra.jsonl"
+ },
+ {
+  "setting": "GLM-5.3-Flash",
+  "cell": "base",
+  "cut": 300,
+  "null_counts": false,
+  "file": "v2_2026-10/runs/second_family_open_2026-10-17/neutral__zai-org-GLM-5.3-Flash__together.jsonl"
+ },
+ {
+  "setting": "GLM-5.3-Flash",
+  "cell": "nc300",
+  "cut": 300,
+  "null_counts": true,
+  "file": "v2_2026-10/runs/exp_nullcounts_2026-10-19/neutral__zai-org-GLM-5.3-Flash__together.jsonl"
+ },
+ {
+  "setting": "Qwen3.8-Flash",
+  "cell": "base",
+  "cut": 300,
+  "null_counts": false,
+  "file": "v2_2026-10/runs/second_family_open_2026-10-17/neutral__Qwen-Qwen3.8-Flash__deepinfra.jsonl"
+ },
+ {
+  "setting": "Claude Haiku 4.5",
+  "cell": "cap4000",
+  "cut": 4000,
+  "null_counts": false,
+  "file": "v2_2026-10/runs/exp_cap4000_g_2026-10-20/neutral__claude-haiku-4-5__anthropic.jsonl"
+ },
+ {
+  "setting": "Claude Haiku 4.5",
+  "cell": "cap4000_nc",
+  "cut": 4000,
+  "null_counts": true,
+  "file": "v2_2026-10/runs/exp_cap4000_nc_g_2026-10-20/neutral__claude-haiku-4-5__anthropic.jsonl"
+ },
+ {
+  "setting": "Claude Sonnet 5.5",
+  "cell": "cap4000",
+  "cut": 4000,
+  "null_counts": false,
+  "file": "v2_2026-10/runs/exp_cap4000_g_2026-10-20/neutral__claude-sonnet-5-5__anthropic.jsonl"
+ },
+ {
+  "setting": "Claude Sonnet 5.5",
+  "cell": "cap4000_nc",
+  "cut": 4000,
+  "null_counts": true,
+  "file": "v2_2026-10/runs/exp_cap4000_nc_g_2026-10-20/neutral__claude-sonnet-5-5__anthropic.jsonl"
+ },
+ {
+  "setting": "Gemini 3.5 Flash-Lite",
+  "cell": "cap4000",
+  "cut": 4000,
+  "null_counts": false,
+  "file": "v2_2026-10/runs/exp_cap4000_g_2026-10-20/neutral__gemini-3.5-flash-lite__gemini.jsonl"
+ },
+ {
+  "setting": "Gemini 3.5 Flash-Lite",
+  "cell": "cap4000_nc",
+  "cut": 4000,
+  "null_counts": true,
+  "file": "v2_2026-10/runs/exp_cap4000_nc_g_2026-10-20/neutral__gemini-3.5-flash-lite__gemini.jsonl"
+ },
+ {
+  "setting": "gpt-5-mini, minimal",
+  "cell": "cap4000",
+  "cut": 4000,
+  "null_counts": false,
+  "file": "v2_2026-10/runs/exp_cap4000_g_2026-10-20/neutral__gpt-5-mini__openai.jsonl"
+ },
+ {
+  "setting": "gpt-5-mini, minimal",
+  "cell": "cap4000_nc",
+  "cut": 4000,
+  "null_counts": true,
+  "file": "v2_2026-10/runs/exp_cap4000_nc_g_2026-10-20/neutral__gpt-5-mini__openai.jsonl"
+ },
+ {
+  "setting": "gpt-oss-120b",
+  "cell": "cap4000",
+  "cut": 4000,
+  "null_counts": false,
+  "file": "v2_2026-10/runs/exp_cap4000_g_2026-10-20/neutral__openai-gpt-oss-120b__deepinfra.jsonl"
+ },
+ {
+  "setting": "gpt-oss-120b",
+  "cell": "cap4000_nc",
+  "cut": 4000,
+  "null_counts": true,
+  "file": "v2_2026-10/runs/exp_cap4000_nc_g_2026-10-20/neutral__openai-gpt-oss-120b__deepinfra.jsonl"
+ },
+ {
+  "setting": "GLM-5.3-Flash",
+  "cell": "cap4000",
+  "cut": 4000,
+  "null_counts": false,
+  "file": "v2_2026-10/runs/exp_cap4000_g_2026-10-20/neutral__zai-org-GLM-5.3-Flash__together.jsonl"
+ },
+ {
+  "setting": "GLM-5.3-Flash",
+  "cell": "cap4000_nc",
+  "cut": 4000,
+  "null_counts": true,
+  "file": "v2_2026-10/runs/exp_cap4000_nc_g_2026-10-20/neutral__zai-org-GLM-5.3-Flash__together.jsonl"
+ },
+ {
+  "setting": "Qwen3.8-Flash",
+  "cell": "cap4000",
+  "cut": 4000,
+  "null_counts": false,
+  "file": "v2_2026-10/runs/exp_cap4000_g_2026-10-20/neutral__Qwen-Qwen3.8-Flash__deepinfra.jsonl"
+ },
+ {
+  "setting": "Qwen3.8-Flash",
+  "cell": "cap4000_nc",
+  "cut": 4000,
+  "null_counts": true,
+  "file": "v2_2026-10/runs/exp_cap4000_nc_g_2026-10-20/neutral__Qwen-Qwen3.8-Flash__deepinfra.jsonl"
+ }
+]
