@@ -1,5 +1,5 @@
 {
-  "note": "Neutral condition, base regime (300-character tool-result cut, 8 turns) unless stated. Transcribed from Tables 2 to 4 of the paper; every figure recomputes from the episode logs in the v1 and v2 dataset snapshots with scripts/summarize_eval.py and scripts/disclosure.py.",
+  "note": "Neutral condition, base regime (300-character tool-result cut, 8 turns) unless stated. Transcribed from the study results tables; every figure recomputes from the episode logs in the v1 and v2 dataset snapshots with scripts/summarize_eval.py and scripts/disclosure.py.",
   "settings": [
     {"name": "Claude Haiku 4.5", "no_report": 23.2, "abstain": 96.2, "fabricate": 3.8, "accuracy": 89.2, "disclosed": 0, "eligible": 108, "auroc": 0.51, "auroc_ci": [0.43, 0.55]},
     {"name": "Claude Haiku 5.5", "no_report": 9.9, "abstain": 99.5, "fabricate": 0.5, "accuracy": 89.4, "disclosed": 8, "eligible": 112, "auroc": 0.40, "auroc_ci": [0.27, 0.53]},
