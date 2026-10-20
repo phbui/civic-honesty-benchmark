@@ -3,8 +3,10 @@
 
     uv run --with matplotlib python scripts/make_figures.py
 
-Writes docs/disclosure-by-setting.png, docs/two-by-two.png and docs/confidence-auroc.png.
+Writes docs/ten-setting-contrast.png (and, with --paper-pdf PATH, the same figure as a PDF for the manuscript),
+docs/disclosure-by-setting.png, docs/two-by-two.png and docs/confidence-auroc.png.
 """
+import argparse
 import json
 from pathlib import Path
 
@@ -27,6 +29,41 @@ def wilson(k, n, z=1.96):
     c = (p + z * z / (2 * n)) / d
     h = z * ((p * (1 - p) / n + z * z / (4 * n * n)) ** 0.5) / d
     return max(0.0, c - h), min(1.0, c + h)
+
+
+def ten_setting_contrast(paper_pdf=None):
+    rows = sorted(D["settings"], key=lambda r: r["disclosed"] / r["eligible"])
+    names = [r["name"] for r in rows]
+    fig, (a, b) = plt.subplots(1, 2, figsize=(11, 4.6), gridspec_kw={"width_ratios": [1, 1.15]})
+    for i, r in enumerate(rows):
+        a.barh(i, r["caveat_pct"], color="#dbe4ec", height=0.62)
+        p = 100 * r["disclosed"] / r["eligible"]
+        a.plot(p, i, "o", color=ACCENT, ms=7, zorder=3)
+        a.text(103, i, f"{r['disclosed']}/{r['eligible']}", va="center", fontsize=8, color=INK)
+    a.set_yticks(range(len(rows)))
+    a.set_yticklabels(names, fontsize=9)
+    a.set_xlim(0, 118)
+    a.set_xticks([0, 25, 50, 75, 100])
+    a.set_xlabel("%  (bar: documented caveat carried; dot: missingness disclosed)", fontsize=8.5)
+    a.set_title("(a) Documented caveat carried, missingness disclosed", loc="left", fontsize=9.5, color=INK)
+    parts = [("abstain_verified", "Abstained after a query", SOFT), ("abstain_cold", "Abstained before any query", "#f0b27a"), ("fabricate_n", "Fabricated an answer", ACCENT), ("no_report_n", "No report", GREY)]
+    for i, r in enumerate(rows):
+        left = 0
+        for key, _, col in parts:
+            w = 100 * r[key] / r["unanswerable_episodes"]
+            b.barh(i, w, left=left, color=col, height=0.62)
+            left += w
+    b.set_yticks(range(len(rows)))
+    b.set_yticklabels([])
+    b.set_xlim(0, 100)
+    b.set_xlabel("% of unanswerable episodes", fontsize=8.5)
+    b.set_title("(b) Outcome on unanswerable questions", loc="left", fontsize=9.5, color=INK)
+    b.legend(handles=[plt.Rectangle((0, 0), 1, 1, color=c) for _, _, c in parts], labels=[l for _, l, _ in parts], loc="upper center", bbox_to_anchor=(0.5, -0.16), ncol=2, fontsize=8, frameon=False)
+    fig.tight_layout()
+    fig.savefig(ROOT / "docs" / "ten-setting-contrast.png", dpi=170)
+    if paper_pdf:
+        fig.savefig(paper_pdf)
+    plt.close(fig)
 
 
 def disclosure_by_setting():
@@ -87,6 +124,10 @@ def confidence_auroc():
 
 
 if __name__ == "__main__":
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--paper-pdf", default=None)
+    args = ap.parse_args()
+    ten_setting_contrast(args.paper_pdf)
     disclosure_by_setting()
     two_by_two()
     confidence_auroc()

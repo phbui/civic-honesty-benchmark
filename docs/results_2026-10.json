@@ -1,23 +1,285 @@
 {
-  "note": "Neutral condition, base regime (300-character tool-result cut, 8 turns) unless stated. Transcribed from the study results tables; every figure recomputes from the episode logs in the v1 and v2 dataset snapshots with scripts/summarize_eval.py and scripts/disclosure.py.",
-  "settings": [
-    {"name": "Claude Haiku 4.5", "no_report": 23.2, "abstain": 96.2, "fabricate": 3.8, "accuracy": 89.2, "disclosed": 0, "eligible": 108, "auroc": 0.51, "auroc_ci": [0.43, 0.55]},
-    {"name": "Claude Haiku 5.5", "no_report": 9.9, "abstain": 99.5, "fabricate": 0.5, "accuracy": 89.4, "disclosed": 8, "eligible": 112, "auroc": 0.40, "auroc_ci": [0.27, 0.53]},
-    {"name": "Claude Sonnet 5.5", "no_report": 33.9, "abstain": 100.0, "fabricate": 0.0, "accuracy": 85.5, "disclosed": 8, "eligible": 62, "auroc": 0.46, "auroc_ci": [0.28, 0.64]},
-    {"name": "Gemini 3.5 Flash-Lite", "no_report": 12.6, "abstain": 96.3, "fabricate": 3.7, "accuracy": 92.0, "disclosed": 1, "eligible": 113, "auroc": 0.50, "auroc_ci": null},
-    {"name": "gpt-5-mini (minimal)", "no_report": 46.0, "abstain": 73.8, "fabricate": 26.2, "accuracy": 76.3, "disclosed": 33, "eligible": 103, "auroc": 0.64, "auroc_ci": [0.52, 0.74]},
-    {"name": "gpt-5-mini (low)", "no_report": 35.1, "abstain": 100.0, "fabricate": 0.0, "accuracy": 71.0, "disclosed": 35, "eligible": 105, "auroc": 0.39, "auroc_ci": [0.29, 0.48]},
-    {"name": "gpt-oss-120b (third-party host)", "no_report": 53.9, "abstain": 98.5, "fabricate": 1.5, "accuracy": 85.2, "disclosed": 1, "eligible": 44, "auroc": 0.56, "auroc_ci": [0.47, 0.69]},
-    {"name": "Qwen3-32B", "no_report": 8.9, "abstain": 97.5, "fabricate": 2.5, "accuracy": 84.1, "disclosed": 0, "eligible": 99, "auroc": 0.37, "auroc_ci": [0.32, 0.42]},
-    {"name": "GLM-5.3-Flash", "no_report": 45.5, "abstain": 100.0, "fabricate": 0.0, "accuracy": 95.7, "disclosed": 18, "eligible": 88, "auroc": 0.40, "auroc_ci": [0.28, 0.61]},
-    {"name": "Qwen3.8-Flash", "no_report": 69.8, "abstain": 100.0, "fabricate": 0.0, "accuracy": 98.6, "disclosed": 14, "eligible": 47, "auroc": 0.81, "auroc_ci": [0.74, 0.87]}
-  ],
-  "two_by_two": {
-    "cells": ["300 chars, no counts", "4,000 chars, no counts", "300 chars, counts", "4,000 chars, counts"],
-    "models": [
-      {"name": "Claude Haiku 5.5", "disclosed": [8, 14, 44, 93], "eligible": [112, 113, 65, 113], "no_report": [9.9, 0.0, 28.0, 0.0]},
-      {"name": "gpt-5-mini (low)", "disclosed": [35, 45, 26, 99], "eligible": [105, 112, 34, 113], "no_report": [35.1, 2.3, 59.1, 3.4]},
-      {"name": "Qwen3-32B", "disclosed": [0, 0, 1, 1], "eligible": [99, 112, 30, 112], "no_report": [8.9, 2.3, 38.1, 3.5]}
-    ]
+ "note": "Neutral condition, base regime (300-character tool-result cut, 8 turns) unless stated. Transcribed from the study results tables; every figure recomputes from the episode logs in the v1 and v2 dataset snapshots with scripts/summarize_eval.py and scripts/disclosure.py.",
+ "settings": [
+  {
+   "name": "Claude Haiku 4.5",
+   "no_report": 23.2,
+   "abstain": 96.2,
+   "fabricate": 3.8,
+   "accuracy": 89.2,
+   "disclosed": 0,
+   "eligible": 108,
+   "auroc": 0.51,
+   "auroc_ci": [
+    0.43,
+    0.55
+   ],
+   "caveat_pct": 100.0,
+   "caveat_answered_unreliable": 130,
+   "unanswerable_episodes": 220,
+   "abstain_verified": 125,
+   "abstain_cold": 0,
+   "fabricate_n": 5,
+   "no_report_n": 90
+  },
+  {
+   "name": "Claude Haiku 5.5",
+   "no_report": 9.9,
+   "abstain": 99.5,
+   "fabricate": 0.5,
+   "accuracy": 89.4,
+   "disclosed": 8,
+   "eligible": 112,
+   "auroc": 0.4,
+   "auroc_ci": [
+    0.27,
+    0.53
+   ],
+   "caveat_pct": 100.0,
+   "caveat_answered_unreliable": 138,
+   "unanswerable_episodes": 220,
+   "abstain_verified": 199,
+   "abstain_cold": 0,
+   "fabricate_n": 1,
+   "no_report_n": 20
+  },
+  {
+   "name": "Claude Sonnet 5.5",
+   "no_report": 33.9,
+   "abstain": 100.0,
+   "fabricate": 0.0,
+   "accuracy": 85.5,
+   "disclosed": 8,
+   "eligible": 62,
+   "auroc": 0.46,
+   "auroc_ci": [
+    0.28,
+    0.64
+   ],
+   "caveat_pct": 100.0,
+   "caveat_answered_unreliable": 89,
+   "unanswerable_episodes": 220,
+   "abstain_verified": 167,
+   "abstain_cold": 0,
+   "fabricate_n": 0,
+   "no_report_n": 53
+  },
+  {
+   "name": "Gemini 3.5 Flash-Lite",
+   "no_report": 12.6,
+   "abstain": 96.3,
+   "fabricate": 3.7,
+   "accuracy": 92.0,
+   "disclosed": 1,
+   "eligible": 113,
+   "auroc": 0.5,
+   "auroc_ci": null,
+   "caveat_pct": 100.0,
+   "caveat_answered_unreliable": 146,
+   "unanswerable_episodes": 220,
+   "abstain_verified": 180,
+   "abstain_cold": 0,
+   "fabricate_n": 7,
+   "no_report_n": 33
+  },
+  {
+   "name": "gpt-5-mini (minimal)",
+   "no_report": 46.0,
+   "abstain": 73.8,
+   "fabricate": 26.2,
+   "accuracy": 76.3,
+   "disclosed": 33,
+   "eligible": 103,
+   "auroc": 0.64,
+   "auroc_ci": [
+    0.52,
+    0.74
+   ],
+   "caveat_pct": 100.0,
+   "caveat_answered_unreliable": 109,
+   "unanswerable_episodes": 220,
+   "abstain_verified": 45,
+   "abstain_cold": 0,
+   "fabricate_n": 16,
+   "no_report_n": 159
+  },
+  {
+   "name": "gpt-5-mini (low)",
+   "no_report": 35.1,
+   "abstain": 100.0,
+   "fabricate": 0.0,
+   "accuracy": 71.0,
+   "disclosed": 35,
+   "eligible": 105,
+   "auroc": 0.39,
+   "auroc_ci": [
+    0.29,
+    0.48
+   ],
+   "caveat_pct": 100.0,
+   "caveat_answered_unreliable": 100,
+   "unanswerable_episodes": 220,
+   "abstain_verified": 96,
+   "abstain_cold": 1,
+   "fabricate_n": 0,
+   "no_report_n": 123
+  },
+  {
+   "name": "gpt-oss-120b (third-party host)",
+   "no_report": 53.9,
+   "abstain": 98.5,
+   "fabricate": 1.5,
+   "accuracy": 85.2,
+   "disclosed": 1,
+   "eligible": 44,
+   "auroc": 0.56,
+   "auroc_ci": [
+    0.47,
+    0.69
+   ],
+   "caveat_pct": 100.0,
+   "caveat_answered_unreliable": 51,
+   "unanswerable_episodes": 217,
+   "abstain_verified": 57,
+   "abstain_cold": 77,
+   "fabricate_n": 2,
+   "no_report_n": 81
+  },
+  {
+   "name": "Qwen3-32B",
+   "no_report": 8.9,
+   "abstain": 97.5,
+   "fabricate": 2.5,
+   "accuracy": 84.1,
+   "disclosed": 0,
+   "eligible": 99,
+   "auroc": 0.37,
+   "auroc_ci": [
+    0.32,
+    0.42
+   ],
+   "caveat_pct": 100.0,
+   "caveat_answered_unreliable": 108,
+   "unanswerable_episodes": 220,
+   "abstain_verified": 197,
+   "abstain_cold": 0,
+   "fabricate_n": 5,
+   "no_report_n": 18
+  },
+  {
+   "name": "GLM-5.3-Flash",
+   "no_report": 45.5,
+   "abstain": 100.0,
+   "fabricate": 0.0,
+   "accuracy": 95.7,
+   "disclosed": 18,
+   "eligible": 88,
+   "auroc": 0.4,
+   "auroc_ci": [
+    0.28,
+    0.61
+   ],
+   "caveat_pct": 100.0,
+   "caveat_answered_unreliable": 96,
+   "unanswerable_episodes": 220,
+   "abstain_verified": 89,
+   "abstain_cold": 0,
+   "fabricate_n": 0,
+   "no_report_n": 131
+  },
+  {
+   "name": "Qwen3.8-Flash",
+   "no_report": 69.8,
+   "abstain": 100.0,
+   "fabricate": 0.0,
+   "accuracy": 98.6,
+   "disclosed": 14,
+   "eligible": 47,
+   "auroc": 0.81,
+   "auroc_ci": [
+    0.74,
+    0.87
+   ],
+   "caveat_pct": 100.0,
+   "caveat_answered_unreliable": 48,
+   "unanswerable_episodes": 220,
+   "abstain_verified": 63,
+   "abstain_cold": 0,
+   "fabricate_n": 0,
+   "no_report_n": 157
   }
+ ],
+ "two_by_two": {
+  "cells": [
+   "300 chars, no counts",
+   "4,000 chars, no counts",
+   "300 chars, counts",
+   "4,000 chars, counts"
+  ],
+  "models": [
+   {
+    "name": "Claude Haiku 5.5",
+    "disclosed": [
+     8,
+     14,
+     44,
+     93
+    ],
+    "eligible": [
+     112,
+     113,
+     65,
+     113
+    ],
+    "no_report": [
+     9.9,
+     0.0,
+     28.0,
+     0.0
+    ]
+   },
+   {
+    "name": "gpt-5-mini (low)",
+    "disclosed": [
+     35,
+     45,
+     26,
+     99
+    ],
+    "eligible": [
+     105,
+     112,
+     34,
+     113
+    ],
+    "no_report": [
+     35.1,
+     2.3,
+     59.1,
+     3.4
+    ]
+   },
+   {
+    "name": "Qwen3-32B",
+    "disclosed": [
+     0,
+     0,
+     1,
+     1
+    ],
+    "eligible": [
+     99,
+     112,
+     30,
+     112
+    ],
+    "no_report": [
+     8.9,
+     2.3,
+     38.1,
+     3.5
+    ]
+   }
+  ]
+ }
 }
