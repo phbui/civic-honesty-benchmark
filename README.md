@@ -34,7 +34,7 @@ The study separates three stages that one disclosure rate would collapse. The ag
 | Looking | A null-revealing query appears in 46 of 113 eligible Claude Haiku 5.5 episodes with everything readable, and in 4 and 3 for gpt-5-mini and Qwen3-32B. No environment changed it. |
 | Keeping going | A harness default cut every tool result to 300 characters. At that length the no-report rate runs from 9% to 70% across settings. At 4,000 characters it falls to 0% to 2% in the three settings re-run, and the disclosure gap stays. |
 | Telling | Handed the null count under a readable schema, Claude Haiku 5.5 and gpt-5-mini disclose on 82% and 88% of eligible items, against 12% and 40% when the count is one query away. Qwen3-32B discloses on 1% with the number in its tool result. |
-| Hedges | An item-by-item audit of 50 strict hits found 14 quantified, 8 specific, 24 boilerplate, and 4 false positives. The rater was a language model, so the split is an estimate. |
+| Hedges | An item-by-item audit of 50 strict hits, labeled by a language model and by the author (45 of 50 blind, agreement 46 of 50, kappa 0.88), found 14 quantified, 9 specific, 23 boilerplate, and 4 false positives after reconciliation. |
 | Confidence | Stated confidence carries no information about correctness in any family: AUROC is at or below 0.5 in 15 of 17 run-settings and inverted in two. |
 
 ![Strict disclosure for three models across the two environment factors, tool-result cut and null counts in the schema tool.](docs/two-by-two.png)
