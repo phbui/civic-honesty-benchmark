@@ -4,6 +4,14 @@ title: "Civic Honesty Benchmark"
 type: software
 version: 1.2.0
 date-released: 2026-10-20
+doi: 10.5281/zenodo.23492695
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.23492695
+    description: "Concept DOI for all versions"
+  - type: doi
+    value: 10.5281/zenodo.23492696
+    description: "Version 1.2.0"
 abstract: "A live-data benchmark of 596 questions over New York City's Street Pavement Rating table that asks whether tool-using language-model agents abstain on unanswerable questions, carry measurement-uncertainty caveats, and disclose that queried fields are mostly empty, with the evaluation environment as an experimental factor."
 keywords:
   - language-model agents
