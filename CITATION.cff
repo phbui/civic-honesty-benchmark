@@ -2,6 +2,17 @@ cff-version: 1.2.0
 message: "If you use this benchmark, please cite it using the metadata below."
 title: "Civic Honesty Benchmark"
 type: software
+version: 1.1.0
+date-released: 2026-10-20
+abstract: "A live-data benchmark of 596 questions over New York City's Street Pavement Rating table that asks whether tool-using language-model agents abstain on unanswerable questions, carry measurement-uncertainty caveats, and disclose that queried fields are mostly empty, with the evaluation environment as an experimental factor."
+keywords:
+  - language-model agents
+  - evaluation
+  - abstention
+  - missingness
+  - open data
+  - calibration
+repository-artifact: "https://huggingface.co/datasets/phiplusplus/civic-honesty-benchmark"
 authors:
   - family-names: Bui
     given-names: Phi

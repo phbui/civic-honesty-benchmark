@@ -1,0 +1,16 @@
+# Run history and the order of design choices
+
+The README presents one protocol applied across ten model settings. This page gives the order in which the runs happened, because several design choices were made after earlier results were seen, and a reader should be able to tell which.
+
+| Date | Runs and decisions |
+|---|---|
+| 2026-07-31 | Power analysis dated and shipped with the release, three days before the first evaluation. |
+| 2026-08-03 | Claude Haiku 4.5, neutral, level, increment, and no-tool conditions (2,164 episodes), base regime. |
+| 2026-08-05 | Haiku 4.5, re-encounter condition, added after the four conditions above to give re-reporting every chance (596 episodes). |
+| 2026-10-17 | Seven further settings (Claude Haiku 5.5, Gemini 3.5 Flash-Lite, gpt-5-mini at two reasoning levels, Qwen3-32B, Qwen3.8-Flash, GLM-5.3-Flash), four conditions each, base regime. A repeat of Gemini and Qwen3-32B. A twenty-turn budget on three settings, whose logs are released and not analyzed in the README. |
+| 2026-10-17 to 18 | Analysis of the no-report episodes identifies the 300-character tool-result cut as a harness default that the first runs had carried unreported. A scorer false positive on the literal string "null" is found and fixed. The 50-hit audit and the quantified tier are added. Everything below was designed after these results were seen. |
+| 2026-10-19 | Two further repeats of Gemini and Qwen3-32B. The 4,000-character cut on three settings. The null-count schema tool at the base cut on five settings and at 4,000 characters on three. gpt-oss-120b re-run on a second host with recovered tool calls. Claude Sonnet 5.5. A native 90-question check of gpt-oss-120b begins. |
+
+The question set, the base-regime protocol, and the lenient and strict tiers define the first four rows. The environment factors, the quantified tier, and the audit were chosen in response to results, so those parts are exploratory in design. Every cell that was run is reported, no correction is applied for the choice of cells, and the primary endpoint (strict disclosure in the neutral condition) is reported as observed in each setting. Gold was materialized the same day as every run and re-executed afterward, and no run saw a drifted value.
+
+`v2_2026-10/MANIFEST.json` on Hugging Face lists every run file with its date, cut length, null-count flag, turn budget, row count, and error rows.
