@@ -18,7 +18,7 @@ import matplotlib.pyplot as plt
 ROOT = Path(__file__).resolve().parent.parent
 D = json.loads((ROOT / "docs" / "results_2026-10.json").read_text())
 INK, GREY, ACCENT, SOFT = "#1f2933", "#9aa5b1", "#c0392b", "#2c7fb8"
-plt.rcParams.update({"font.size": 10, "axes.spines.top": False, "axes.spines.right": False, "axes.edgecolor": GREY})
+plt.rcParams.update({"pdf.fonttype": 42, "font.size": 10, "axes.spines.top": False, "axes.spines.right": False, "axes.edgecolor": GREY})
 
 
 def wilson(k, n, z=1.96):
@@ -85,22 +85,32 @@ def disclosure_by_setting():
     plt.close(fig)
 
 
-def two_by_two():
-    T = D["two_by_two"]
-    fig, axes = plt.subplots(1, 3, figsize=(10, 3.9), sharey=True)
-    colors = [GREY, "#bdc7d1", "#e8a09a", ACCENT]
-    for ax, m in zip(axes, T["models"]):
-        for i, (k, n) in enumerate(zip(m["disclosed"], m["eligible"])):
-            p = 100 * k / n
-            ax.bar(i, p, color=colors[i], width=0.72)
-            ax.text(i, p + 2, f"{k}/{n}", ha="center", fontsize=8, color=INK)
+def two_by_two(numbers_path=None):
+    """Strict disclosure for every setting across the cut-length and null-count cells, from scripts/paper_numbers.py output."""
+    N = json.loads(Path(numbers_path).read_text())["cells"] if numbers_path else None
+    if N is None:
+        return
+    order = ["Claude Haiku 4.5", "Claude Haiku 5.5", "Claude Sonnet 5.5", "Gemini 3.5 Flash-Lite", "gpt-5-mini, minimal",
+             "gpt-5-mini, low", "gpt-oss-120b", "Qwen3-32B", "GLM-5.3-Flash", "Qwen3.8-Flash"]
+    cells = [("base", "300\nno counts", GREY), ("cap4000", "4,000\nno counts", "#bdc7d1"), ("nc300", "300\ncounts", "#e8a09a"), ("cap4000_nc", "4,000\ncounts", ACCENT)]
+    fig, axes = plt.subplots(2, 5, figsize=(13, 5.6), sharey=True)
+    for ax, name in zip(axes.flat, order):
+        for i, (key, label, color) in enumerate(cells):
+            x = N.get(name, {}).get(key)
+            if not x:
+                ax.text(i, 3, "not run", ha="center", fontsize=6.5, color=GREY, rotation=90, va="bottom")
+                continue
+            d = x["disclosure_answered"]
+            ax.bar(i, d["pct"], color=color, width=0.72)
+            ax.text(i, d["pct"] + 2, f"{d['k']}/{d['n']}", ha="center", fontsize=6.5, color=INK)
         ax.set_xticks(range(4))
-        ax.set_xticklabels(["300\nno counts", "4,000\nno counts", "300\ncounts", "4,000\ncounts"], fontsize=8)
-        ax.set_title(m["name"], color=INK, fontsize=10)
-        ax.set_ylim(0, 105)
-    axes[0].set_ylabel("Strict disclosure (%)")
-    fig.suptitle("Handed the null count under a readable schema, two models tell and one does not", x=0.01, ha="left", color=INK, fontsize=11)
-    fig.tight_layout(rect=(0, 0, 1, 0.94))
+        ax.set_xticklabels([c[1] for c in cells], fontsize=6.5)
+        ax.set_title(name, color=INK, fontsize=9)
+        ax.set_ylim(0, 112)
+    for ax in axes[:, 0]:
+        ax.set_ylabel("Strict disclosure (%)")
+    fig.suptitle("Strict disclosure across the tool-result cut (300 or 4,000 characters) and null counts in the schema tool", x=0.01, ha="left", color=INK, fontsize=11)
+    fig.tight_layout(rect=(0, 0, 1, 0.95))
     fig.savefig(ROOT / "docs" / "two-by-two.png", dpi=170)
     plt.close(fig)
 
@@ -126,9 +136,10 @@ def confidence_auroc():
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--paper-pdf", default=None)
+    ap.add_argument("--numbers", default=None, help="numbers.json from scripts/paper_numbers.py, for the two-by-two figure")
     args = ap.parse_args()
     ten_setting_contrast(args.paper_pdf)
     disclosure_by_setting()
-    two_by_two()
+    two_by_two(args.numbers)
     confidence_auroc()
     print("wrote docs/*.png")

@@ -1,6 +1,6 @@
 # Launchers
 
-The shell scripts here are the exact launch commands of the runs dated 2026-10-17 and 2026-10-19, with the working directory and interpreter paths edited so they run from a clone of this repository (`cd` to the repository root, `python` on the path). Each takes API keys from `~/.keys/<vendor>` and passes `--i-know-this-costs-money`, so running one spends real money.
+The shell scripts here are the exact launch commands of the runs dated 2026-10-17, 2026-10-19, and 2026-10-20, with the working directory and interpreter paths edited so they run from a clone of this repository (`cd` to the repository root, `python` on the path). Each takes API keys from `~/.keys/<vendor>` and passes `--i-know-this-costs-money`, so running one spends real money.
 
 The per-setting flags (reasoning level, temperature handling, extra request fields) are stamped into every run's `summary__*.json`, which is the authority for the runs that these scripts do not cover.
 

@@ -31,13 +31,13 @@ The study separates three stages that one disclosure rate would collapse. The ag
 | Stage | Result |
 |---|---|
 | Retrieval | Accuracy on answered answerable items is 71% to 99% across settings, and 89% for Claude Haiku 4.5. |
-| Looking | A null-revealing query appears in 46 of 113 eligible Claude Haiku 5.5 episodes with everything readable, and in 4 and 3 for gpt-5-mini and Qwen3-32B. No environment changed it. |
-| Keeping going | A harness default cut every tool result to 300 characters. At that length the no-report rate runs from 9% to 70% across settings. At 4,000 characters it falls to 0% to 2% in the three settings re-run, and the disclosure gap stays. |
-| Telling | Handed the null count under a readable schema, Claude Haiku 5.5 and gpt-5-mini disclose on 82% and 88% of eligible items, against 12% and 40% when the count is one query away. Qwen3-32B discloses on 1% with the number in its tool result. |
-| Hedges | An item-by-item audit of 50 strict hits, labeled by a language model and by the author (45 of 50 blind, agreement 46 of 50, kappa 0.88), found 14 quantified, 9 specific, 23 boilerplate, and 4 false positives after reconciliation. |
-| Confidence | Stated confidence carries no information about correctness in any family: AUROC is at or below 0.5 in 15 of 17 run-settings and inverted in two. |
+| Looking | A null-revealing query appears in 54 of 113 eligible Claude Haiku 5.5 episodes with a readable schema and in 46 with the counts added, in 4 of 113 for gpt-5-mini at low reasoning, and in 2 of 112 for Qwen3-32B and 112 of 113 for GLM-5.3-Flash. Looking differs between models far more than between environments. |
+| Keeping going | A harness default cut every tool result to 300 characters. At that length the no-report rate runs from 9% to 70% across settings. At 4,000 characters it falls to between 0% and 37% in nine settings, and gpt-oss-120b stays near 45%. The disclosure gap stays. |
+| Telling | Handed the null count under a readable schema, six of ten settings disclose on 44% to 96% of eligible items, against 0% to 40% when the count is one query away: Claude Haiku 4.5, Claude Haiku 5.5, Claude Sonnet 5.5, gpt-5-mini at both reasoning levels, and Qwen3.8-Flash. Gemini 3.5 Flash-Lite, gpt-oss-120b, Qwen3-32B, and GLM-5.3-Flash do not respond. |
+| Hedges | An item-by-item audit of 50 strict hits, labeled by a language model and by the author (48 of 50 blind, agreement 46 of 50, kappa 0.88), found 14 quantified, 9 specific, 23 boilerplate, and 4 false positives after reconciliation. |
+| Confidence | Stated confidence carries little information about correctness: AUROC is at or below 0.5 in 17 of 35 run-settings, and a template-clustered interval lies entirely below 0.5 in five. |
 
-![Strict disclosure for three models across the two environment factors, tool-result cut and null counts in the schema tool.](docs/two-by-two.png)
+![Strict disclosure for ten settings across the two environment factors, tool-result cut and null counts in the schema tool.](docs/two-by-two.png)
 
 The run order is in [docs/RUN_HISTORY.md](docs/RUN_HISTORY.md) and in [CHANGELOG.md](CHANGELOG.md). The cut length, the null-count variant, the quantified scoring tier, and the audit were chosen after earlier results were seen, so those parts are exploratory in design.
 

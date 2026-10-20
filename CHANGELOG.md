@@ -2,6 +2,13 @@
 
 All notable changes. The version in `VERSION`, `pyproject.toml`, and `CITATION.cff` match the newest entry.
 
+## 1.2.0, 2026-10-20
+
+- Data: the readable-schema cells (4,000-character cut, with and without null counts) for all ten settings, so that every setting carries the full environment design that three had before. 14 runs of 596 episodes, same-day gold with no drift.
+- Analysis: `scripts/paper_numbers.py` recomputes every reported number, including template-clustered intervals, from the released files and `docs/cells_2026-10.json`, with tests in `scripts/test_paper_numbers.py`.
+- Findings: six of ten settings disclose missingness when handed the null count, and four do not. The earlier three-setting comparison is superseded.
+- Figures: PDF fonts embedded as Type 42, and the two-by-two figure now shows all ten settings.
+
 ## 1.1.0, 2026-10-20
 
 The benchmark is presented as one study of ten model settings from six families, with the evaluation environment as an experimental factor.
